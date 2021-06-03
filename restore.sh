@@ -12,6 +12,8 @@ while read f; do
 done < Dotfiles
 
 # Copy init.nvim
-cp -rf .vimrc ~/.config/nvim/init.vim
+mkdir ~/.config
+mkdir ~/.nvim
+cp -rf init.vim  ~/.config/nvim/init.vim
 
 echo "Restore dotfiles done!"

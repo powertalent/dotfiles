@@ -10,4 +10,5 @@ echo "Backup files done, please commit!"
 
 git add . -A
 git commit -m "Backup at $(date)"
-git push origin master
+#git push origin master
+git push
