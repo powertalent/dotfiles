@@ -1,0 +1,142 @@
+call plug#begin('~/AppData/Local/nvim/plugged')
+" Define bundles via Github repos
+
+"" Statusline/Tabline 
+Plug 'itchyny/lightline.vim'
+
+"" Utils
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+"" Terminal 
+Plug 'voldikss/vim-floaterm'
+
+"" Files Mangement
+Plug 'scrooloose/nerdtree'
+	" Icon - need INSTALL NERD FONT ?
+	" NOT USE NOW : Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+"" Navigate Code
+Plug 'easymotion/vim-easymotion'
+
+"" Support Code
+Plug 'tpope/vim-surround'
+Plug 'alvan/vim-closetag'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+"" Themes [:Colors]
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim'
+Plug 'ayu-theme/ayu-vim'
+
+call plug#end()
+
+"" Not used now ***
+" Plug 'editorconfig/editorconfig-vim'
+" Plug 'sheerun/vim-polyglot'
+" Plug 'honza/vim-snippets'
+" Plug 'ervandew/supertab'
+" Plug 'airblade/vim-gitgutter'
+" Plug 'scrooloose/nerdcommenter'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'terryma/vim-multiple-cursors'
+"============================================================================
+
+""" Note : 
+" Open files      : Ctrl + P
+" Search contents : Ctrl + Shift + F
+
+" New Tab 		  : Ctrl + T
+"""
+
+""" COMMON - BEGIN
+	let mapleader = "\<Space>"
+	nnoremap <leader>r :so ~\AppData\Local\nvim\init.vim<CR>
+	nnoremap <leader>n :tabn<CR>
+	set incsearch 
+	set hlsearch
+	syntax enable
+	set number
+	
+	" using for icondevs
+	set encoding=UTF-8
+	
+	set mouse=a
+	
+	if (has("termguicolors"))
+	set termguicolors
+	endif
+	let ayucolor="dark"   " for dark version of theme
+	colorscheme dracula
+""" COMMON - END
+
+""" 'easymotion/vim-easymotion' - BEGIN
+	" <Leader>f{char}{char} to move to {char}
+	nmap <Leader>f <Plug>(easymotion-overwin-f2)
+	let g:EasyMotion_smartcase = 1
+""" 'easymotion/vim-easymotion' - END
+
+""" 'scrooloose/nerdtree' - BEGIN
+	noremap <C-d> :NERDTreeToggle<CR>
+	map <C-i> :NERDTreeFind<CR>
+	
+	" Automaticaly close nvim if NERDTree is only thing left open
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+	let g:NERDTreeShowHidden = 1
+	let g:NERDTreeMinimalUI = 1
+	let g:NERDTreeIgnore = []
+	let g:NERDTreeStatusline = ''
+""" 'scrooloose/nerdtree' - END
+
+""" 'junegunn/fzf.vim' BEGIN
+	" Preview
+	let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+	
+	let g:fzf_action = {
+	  \ 'ctrl-t': 'tab split',
+	  \ 'ctrl-s': 'split',
+	  \ 'ctrl-v': 'vsplit'
+	  \}
+	
+	nnoremap <C-p> :Files<CR>
+	nnoremap <C-f> :Rg<CR>
+	nnoremap <C-t> :tab new<CR>
+""" 'junegunn/fzf.vim' END
+
+""" 'vim-floaterm' BEGIN
+	" Set floating window border line color to cyan, and background to orange
+	hi FloatermBorder guibg=deepskyblue guifg=black
+	
+	nnoremap   <silent>   <F7>    :FloatermNew<CR>
+	tnoremap   <silent>   <F7>    <C-\><C-n>:FloatermNew<CR>
+	nnoremap   <silent>   <F8>    :FloatermPrev<CR>
+	tnoremap   <silent>   <F8>    <C-\><C-n>:FloatermPrev<CR>
+	nnoremap   <silent>   <F9>    :FloatermNext<CR>
+	tnoremap   <silent>   <F9>    <C-\><C-n>:FloatermNext<CR>
+	nnoremap   <silent>   <F12>   :FloatermToggle<CR>
+	tnoremap   <silent>   <F12>   <C-\><C-n>:FloatermToggle<CR>
+""" 'vim-floaterm' END
+
+" use alt+hjkl to move between split/vsplit panels
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+""" Terminal - BEGIN
+	" turn terminal to normal mode with escape
+	tnoremap <Esc> <C-\><C-n>
+	" start terminal in insert mode
+	au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+	" au TermClose * call feedkeys("i")
+""" Terminal - END
+
+
+" Custom icons for file extensions
+"set guifont=LiterationMonoNF\ Nerd\ Font:h11
+"let g:WebDevIconsUnicodeDecorateFolderNodes = 1
